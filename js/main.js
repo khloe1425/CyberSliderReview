@@ -3,55 +3,60 @@ const data = [...Data];
 
 // Render from data
 const renderData = () => {
-  const contentInner = data?.reduce((content, people, index) => {
-    const position = index === 0 ? "active" : index === (data.length - 1) ? "last" : "next";
+  const contentInner = data?.reduce((content, people) => {
     return content += `
-      <article class="slider__item ${position}">
-        <img src="${people.img}" alt="${people.name} IMG">
-        <h4>${people.name}</h4>
-        <p class="slider__job">${people.job}</p>
-        <p class="slider__quote">${people.text}</p>
-        <div class="slider__icon">
-          <i class="fas fa-quote-right"></i>
+      <article class="slider__item">
+        <div>
+          <img src="${people.img}" alt="${people.name} IMG">
+          <h4>${people.name}</h4>
+          <p class="slider__job">${people.job}</p>
+          <p class="slider__quote">${people.text}</p>
+          <div class="slider__icon">
+            <i class="fas fa-quote-right"></i>
+          </div>
         </div>
       </article>
     `;
   }, "");
 
-  document.querySelector(".slider__container").innerHTML = contentInner;
+  document.querySelector(".slider__content").innerHTML = contentInner;
 }
 renderData();
 
 // Slideshow
-const startSlider = type => {
-  const firstDiv = document.querySelector(".active");
-  const lastDiv = document.querySelector(".last");
-  let secondDiv = firstDiv.nextElementSibling;
-  if (!secondDiv) {
-    secondDiv = document.querySelector(".slider__container").firstElementChild;
-  }
-  firstDiv.classList.remove("active");
-  lastDiv.classList.remove("last");
-  secondDiv.classList.remove("next");
+const sliderViewport = document.querySelector(".slider__viewport");
+const slider = document.querySelector(".slider__content");
+const next = document.querySelector(".next__btn");
+const prev = document.querySelector(".prev__btn");
+let direction;
 
-  if (type === "prev") {
-    firstDiv.classList.add("next");
-    lastDiv.classList.add("active");
-    secondDiv = lastDiv.previousElementSibling;
-    if (!secondDiv) {
-      secondDiv = document.querySelector(".slider__container").lastElementChild;
-    }
-    secondDiv.classList.remove("next");
-    secondDiv.classList.add("last");
-    return;
-  }
-  firstDiv.classList.add("last");
-  lastDiv.classList.add("next");
-  secondDiv.classList.add("active");
-}
-document.querySelector(".next__btn").addEventListener("click", () => {
-  startSlider();
+next.addEventListener("click", () => {
+  direction = -1;
+  sliderViewport.style.justifyContent = "flex-start";
+  slider.style.transform = "translate(calc(-100% / 3))";
 });
-document.querySelector(".prev__btn").addEventListener("click", () => {
-  startSlider('prev');
+
+prev.addEventListener("click", () => {
+  if (direction === -1) {
+    direction = 1;
+    slider.appendChild(slider.firstElementChild);
+  }
+  sliderViewport.style.justifyContent = "flex-end";
+  slider.style.transform = "translate(calc(100% / 3))";
+});
+
+slider.addEventListener("transitionend", () => {
+  // Get the last element and append it to the front
+
+  if (direction === 1) {
+    slider.prepend(slider.lastElementChild);
+  } else {
+    slider.appendChild(slider.firstElementChild);
+  }
+
+  slider.style.transition = "none";
+  slider.style.transform = "translate(0)";
+  setTimeout(() => {
+    slider.style.transition = "all 0.5s";
+  })
 });
