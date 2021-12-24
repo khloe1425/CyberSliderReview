@@ -3,9 +3,9 @@ const data = [...Data];
 
 // Render from data
 const renderData = () => {
-  const contentInner = data?.reduce((content, people) => {
+  const contentInner = data?.reduce((content, people, index) => {
     return content += `
-      <article class="slider__item">
+      <article class="${index} slider__item">
         <div>
           <img src="${people.img}" alt="${people.name} IMG">
           <h4>${people.name}</h4>
@@ -47,7 +47,6 @@ prev.addEventListener("click", () => {
 
 slider.addEventListener("transitionend", () => {
   // Get the last element and append it to the front
-
   if (direction === 1) {
     slider.prepend(slider.lastElementChild);
   } else {
@@ -58,5 +57,5 @@ slider.addEventListener("transitionend", () => {
   slider.style.transform = "translate(0)";
   setTimeout(() => {
     slider.style.transition = "all 0.5s";
-  })
+  });
 });
