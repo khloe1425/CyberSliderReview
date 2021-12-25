@@ -28,20 +28,23 @@ const sliderViewport = document.querySelector(".slider__viewport");
 const slider = document.querySelector(".slider__content");
 const next = document.querySelector(".next__btn");
 const prev = document.querySelector(".prev__btn");
-let direction;
+let direction = 0;
 
 next.addEventListener("click", () => {
+  if (direction === 1) {
+    slider.prepend(slider.lastElementChild);
+  };
   direction = -1;
   sliderViewport.style.justifyContent = "flex-start";
   slider.style.transform = "translate(calc(-100% / 3))";
 });
 
 prev.addEventListener("click", () => {
-  if (direction === -1) {
+  if (direction === -1 || direction === 0) {
     direction = 1;
     slider.appendChild(slider.firstElementChild);
+    sliderViewport.style.justifyContent = "flex-end";
   }
-  sliderViewport.style.justifyContent = "flex-end";
   slider.style.transform = "translate(calc(100% / 3))";
 });
 
