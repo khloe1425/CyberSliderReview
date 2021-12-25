@@ -23,7 +23,7 @@
   --spacing: 0.1rem;
   --radius: 0.25rem;
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+  --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   --fixed-width: 620px;
 }
 body {
@@ -53,6 +53,12 @@ p {
 .d-flex {
   display: flex;
 }
+.fade__in{
+  animation: fadeIn 1.5s ease-out;
+}
+.fade__out{
+  animation: fadeOut 0.3s;
+}
 
 /* LOCAL STYLE (Slider) */
 .slider {
@@ -76,7 +82,7 @@ p {
   margin-right: 1rem;
 }
 .slider__viewport{
-  height: 450px;
+  height: 500px;
   width: 620px;
   justify-content: flex-start;
   overflow: hidden;
@@ -100,10 +106,9 @@ p {
   width: 150px;
   height: 150px;
   object-fit: cover;
-  border: 1px solid var(--color-dark-3);
-  background: var(--color-light-2);
   padding: 0.25rem;
   border-radius: 50%;
+  border: 1px solid var(--color-dark-2);
   box-shadow: var(--dark-shadow);
 }
 .slider__item h4 {
@@ -112,7 +117,7 @@ p {
   font-weight: 400;
   color: var(--color-dark-4);
   letter-spacing: var(--spacing);
-  margin: 0.5rem 0;
+  margin: 1.5rem 0 0.5rem;
 }
 .slider__job {
   margin-bottom: 1.25rem;
@@ -133,19 +138,41 @@ p {
 }
 .slider__btn {
   position: absolute;
-  top: 175px;
-  background: var(--color-dark-2);
+  top: 200px;
+  background: var(--color-dark-4);
   color: var(--color-light-2);
   padding: 0.25rem 0.35rem;
   border-radius: 0.25rem;
   border: transparent;
   cursor: pointer;
+  transition: 0.3s;
+}
+.slider__btn:hover{
+  box-shadow: 0px 0px 10px var(--color-dark-4);
 }
 .prev__btn {
   left: -0.5rem;
 }
 .next__btn {
   right: -0.5rem;
+}
+
+/* KEYFRAMES */
+@keyframes fadeIn{
+  from{
+    opacity: 0;
+  }
+  to{
+    opacity: 1;
+  }
+}
+@keyframes fadeOut{
+  from{
+    opacity: 1;
+  }
+  to{
+    opacity: 0;
+  }
 }
 
 /* RESPONSIVE (Mobile first) */

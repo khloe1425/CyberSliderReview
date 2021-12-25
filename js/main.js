@@ -5,7 +5,7 @@ const data = [...Data];
 const renderData = () => {
   const contentInner = data?.reduce((content, people, index) => {
     return content += `
-      <article class="${index} slider__item">
+      <article class="${index+1} slider__item">
         <div>
           <img src="${people.img}" alt="${people.name} IMG">
           <h4>${people.name}</h4>
@@ -37,6 +37,10 @@ next.addEventListener("click", () => {
   direction = -1;
   sliderViewport.style.justifyContent = "flex-start";
   slider.style.transform = "translate(calc(-100% / 3))";
+
+  // Opacity effect
+  slider.firstElementChild.classList.add("fade__out");
+  slider.firstElementChild.nextElementSibling.classList.add("fade__in");
 });
 
 prev.addEventListener("click", () => {
@@ -46,6 +50,8 @@ prev.addEventListener("click", () => {
     sliderViewport.style.justifyContent = "flex-end";
   }
   slider.style.transform = "translate(calc(100% / 3))";
+  slider.lastElementChild.classList.add("fade__out");
+  slider.firstElementChild.nextElementSibling.classList.add("fade__in");
 });
 
 slider.addEventListener("transitionend", () => {
@@ -59,6 +65,17 @@ slider.addEventListener("transitionend", () => {
   slider.style.transition = "none";
   slider.style.transform = "translate(0)";
   setTimeout(() => {
-    slider.style.transition = "all 0.5s";
+    slider.style.transition = "all 0.5s ease-in-out";
+  });
+
+  // Remove opacity effect
+  const arr = document.querySelectorAll(".slider__item");
+  arr.forEach(item => {
+    if(item.classList.contains("fade__in")){
+      item.classList.remove("fade__in");
+    }
+    if(item.classList.contains("fade__out")){
+      item.classList.remove("fade__out");
+    }
   });
 });
