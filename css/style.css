@@ -24,7 +24,7 @@
   --radius: 0.25rem;
   --light-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   --dark-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-  --fixed-width: 620px;
+  --fixed-width: 780px;
 }
 body {
   font-family: var(--font-primary);
@@ -57,7 +57,7 @@ p {
   animation: fadeIn 1.5s ease-out;
 }
 .fade__out{
-  animation: fadeOut 0.3s;
+  animation: fadeOut 0.3s forwards;
 }
 
 /* LOCAL STYLE (Slider) */
@@ -66,7 +66,7 @@ p {
   margin: auto;
   margin-top: 5rem;
   text-align: center;
-  padding: 1rem 0;
+  padding: 0 5rem;
   position: relative;
 }
 .slider__title {
@@ -151,10 +151,10 @@ p {
   box-shadow: 0px 0px 10px var(--color-dark-4);
 }
 .prev__btn {
-  left: -0.5rem;
+  left: 0;
 }
 .next__btn {
-  right: -0.5rem;
+  right: 0;
 }
 
 /* KEYFRAMES */
@@ -178,10 +178,10 @@ p {
 /* RESPONSIVE (Mobile first) */
 @media screen and (min-width: 768px) {
   .next__btn {
-    right: -5rem;
+    right: 0;
   }
   .prev__btn {
-    left: -5rem;
+    left: 0;
   }
   .slider__btn {
     font-size: 1.3rem;

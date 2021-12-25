@@ -5,7 +5,7 @@ const data = [...Data];
 const renderData = () => {
   const contentInner = data?.reduce((content, people, index) => {
     return content += `
-      <article class="${index+1} slider__item">
+      <article class="slide${index + 1} slider__item">
         <div>
           <img src="${people.img}" alt="${people.name} IMG">
           <h4>${people.name}</h4>
@@ -30,18 +30,18 @@ const next = document.querySelector(".next__btn");
 const prev = document.querySelector(".prev__btn");
 let direction = 0;
 
-next.addEventListener("click", () => {
+const pressNextButton = () => {
   if (direction === 1) {
     slider.prepend(slider.lastElementChild);
   };
   direction = -1;
   sliderViewport.style.justifyContent = "flex-start";
   slider.style.transform = "translate(calc(-100% / 3))";
-
   // Opacity effect
   slider.firstElementChild.classList.add("fade__out");
   slider.firstElementChild.nextElementSibling.classList.add("fade__in");
-});
+};
+next.addEventListener("click", pressNextButton);
 
 prev.addEventListener("click", () => {
   if (direction === -1 || direction === 0) {
@@ -70,12 +70,26 @@ slider.addEventListener("transitionend", () => {
 
   // Remove opacity effect
   const arr = document.querySelectorAll(".slider__item");
-  arr.forEach(item => {
-    if(item.classList.contains("fade__in")){
-      item.classList.remove("fade__in");
+  arr.forEach(slide => {
+    if (slide.classList.contains("fade__in")) {
+      slide.classList.remove("fade__in");
     }
-    if(item.classList.contains("fade__out")){
-      item.classList.remove("fade__out");
+    if (slide.classList.contains("fade__out")) {
+      slide.classList.remove("fade__out");
     }
   });
+});
+
+// Slideshow autoplay
+let intervalID;
+const starShow = () => {
+  intervalID = setInterval(() => {
+    pressNextButton();
+  }, 4000);
+}
+document.querySelector(".slider").addEventListener("mouseover", () => {
+  clearInterval(intervalID);
+});
+document.querySelector(".slider").addEventListener("mouseout", () => {
+  starShow();
 });
